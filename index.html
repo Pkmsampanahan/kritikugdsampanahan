@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kritik & Saran UGD Puskesmas Sampanahan</title>
+    <style>
+        :root {
+            --primary-color: #00897b;
+            --secondary-color: #00695c;
+            --background-color: #f0f7f6;
+            --text-color: #2c3e50;
+            --accent-color: #e67e22;
+        }
+
+        /* Animasi Muncul Pertama Kali (Fade In) */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 10px; /* Diperkecil agar ramah layar HP */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* TAMPILAN STANDAR (PC & LAPTOP) */
+        .container {
+            background-color: #ffffff;
+            padding: 40px 35px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 137, 123, 0.08);
+            max-width: 600px;
+            width: 100%;
+            animation: fadeInUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            margin: 20px auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 26px;
+            color: var(--secondary-color);
+            font-weight: 700;
+        }
+
+        .header p {
+            margin: 8px 0 0 0;
+            font-size: 15px;
+            color: #7f8c8d;
+        }
+
+        .divider {
+            height: 4px;
+            width: 60px;
+            background-color: var(--primary-color);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--secondary-color);
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="date"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1.5px solid #dcdde1;
+            border-radius: 8px;
+            font-size: 15px;
+            background-color: #fbfbfb;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 137, 123, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .rating-container {
+            background-color: #f8faf9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #ced6d4;
+            text-align: center;
+        }
+
+        .rating-box {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 5px;
+        }
+
+        .rating-box input {
+            display: none;
+        }
+
+        .rating-box label {
+            font-size: 36px;
+            color: #d1d8d6;
+            cursor: pointer;
+            transition: transform 0.2s ease, color 0.2s ease;
+            margin-bottom: 0;
+        }
+
+        .rating-box label:hover {
+            transform: scale(1.25);
+        }
+
+        .rating-box input:checked ~ label,
+        .rating-box label:hover,
+        .rating-box label:hover ~ label {
+            color: var(--accent-color);
+        }
+
+        .rating-text {
+            font-size: 13px;
+            font-weight: bold;
+            color: #7f8c8d;
+            height: 18px;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 110px;
+        }
+
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 15px;
+            box-shadow: 0 4px 6px rgba(0, 137, 123, 0.2);
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--secondary-color);
+            box-shadow: 0 6px 15px rgba(0, 137, 123, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 12px;
+            color: #95a5a6;
+            line-height: 1.6;
+        }
+
+        /* MODAL ANIMASI POP-UP */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 400px;
+            width: 85%;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transform: scale(0.7);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .success-icon {
+            width: 70px;
+            height: 70px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 35px;
+            margin: 0 auto 20px auto;
+            animation: popIn 0.5s 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        .modal-content h3 {
+            margin: 0 0 10px 0;
+            color: var(--secondary-color);
+            font-size: 20px;
+        }
+
+        .modal-content p {
+            margin: 0 0 20px 0;
+            color: #555;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .btn-close {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .btn-close:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* ------------------------------------------
+           ⚡ PERUBAHAN OTOMATIS SAAT MODE HP (MEDIA QUERIES)
+        ------------------------------------------ */
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 10px 5px;
+                align-items: flex-start; /* Agar tidak terpotong di HP pendek */
+            }
+
+            .container {
+                padding: 22px 18px; /* Mengurangi padding dalam agar ruang input lebih luas */
+                border-radius: 12px;
+                margin: 10px auto;
+            }
+
+            .header h1 {
+                font-size: 20px; /* Mengecilkan judul agar tidak pecah/turun baris */
+            }
+
+            .header p {
+                font-size: 13px;
+            }
+
+            label {
+                font-size: 13px; /* Label lebih proporsional untuk HP */
+            }
+
+            input[type="text"],
+            input[type="tel"],
+            input[type="date"],
+            textarea,
+            select {
+                padding: 10px 12px;
+                font-size: 14px; /* Ukuran teks input disesuaikan */
+                border-radius: 6px;
+            }
+
+            .rating-box label {
+                font-size: 30px; /* Ukuran bintang dikecilkan agar pas di layar ramping */
+                gap: 8px;
+            }
+
+            .btn-submit {
+                padding: 13px;
+                font-size: 15px;
+            }
+
+            .modal-content {
+                padding: 20px;
+            }
+
+            .success-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Kritik & Saran UGD</h1>
+        <p>Puskesmas Sampanahan</p>
+        <div class="divider"></div>
+    </div>
+
+    <form id="feedbackForm" action="https://script.google.com/macros/s/AKfycbzBc5NL1ua90Mq7e6UbjV1f72OM1fAStnrecFjp1Pxzodv_4UfcvJGSLf7Ak3K_RU61/exec" method="POST">
+        <div class="form-group">
+            <label for="tanggal">📅 Tanggal Kunjungan *</label>
+            <input type="date" id="tanggal" name="tanggal" required>
+        </div>
+
+        <div class="form-group">
+            <label for="nama">👤 Nama Anda (Bisa dikosongkan)</label>
+            <input type="text" id="nama" name="nama" placeholder="Contoh: Pengunjung UGD">
+        </div>
+
+        <div class="form-group">
+            <label for="kontak">📞 Nomor HP / WhatsApp (Opsional)</label>
+            <input type="tel" id="kontak" name="kontak" placeholder="Boleh dikosongkan jika ingin Anonim">
+        </div>
+
+        <div class="form-group">
+            <label>⭐ Kepuasan Pelayanan UGD *</label>
+            <div class="rating-container">
+                <div class="rating-box">
+                    <input type="radio" id="star5" name="rating" value="5" required><label for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+                </div>
+                <div class="rating-text" id="ratingText">Pilih Bintang</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="kategori">📌 Fokus Utama Masukan</label>
+            <select id="kategori" name="kategori">
+                <option value="Pelayanan Petugas">Sikap & Keramahan Petugas (Dokter/Perawat/Bidan)</option>
+                <option value="Kecepatan Respon">Kecepatan Respon Penanganan Darurat</option>
+                <option value="Fasilitas Kamar">Kebersihan, Kenyamanan & Fasilitas UGD</option>
+                <option value="Ketersediaan Obat">Ketersediaan Obat & Alat Kesehatan</option>
+                <option value="Alur & Administrasi">Alur Pendaftaran & Administrasi</option>
+                <option value="Lain-lain">Lainnya</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="pesan">📝 Detail Kritik & Saran *</label>
+            <textarea id="pesan" name="pesan" placeholder="Ceritakan pengalaman Anda secara jelas dan objektif di sini..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">KIRIM MASUKAN</button>
+    </form>
+
+    <div class="footer">
+        Kerahasiaan identitas Anda dijamin sepenuhnya oleh Manajemen <br> 
+        &copy; 2026 Puskesmas Sampanahan.
+    </div>
+</div>
+
+<div class="modal-overlay" id="successModal">
+    <div class="modal-content">
+        <div class="success-icon">✓</div>
+        <h3>Berhasil Terkirim!</h3>
+        <p>Terima kasih banyak. Masukan Anda telah disimpan ke sistem rekapan dan sangat berharga untuk perbaikan mutu UGD Puskesmas Sampanahan.</p>
+        <button class="btn-close" onclick="closeModal()">Selesai</button>
+    </div>
+</div>
+
+<script>
+    const form = document.getElementById('feedbackForm');
+    const modal = document.getElementById('successModal');
+    const submitBtn = document.getElementById('submitBtn');
+    const ratingText = document.getElementById('ratingText');
+    const ratingInputs = document.querySelectorAll('.rating-box input');
+
+    const labelNilai = {
+        '1': '⭐ Sangat Kurang / Kecewa',
+        '2': '⭐⭐ Kurang Puas',
+        '3': '⭐⭐⭐ Cukup / Biasa Saja',
+        '4': '⭐⭐⭐⭐ Puas / Baik',
+        '5': '⭐⭐⭐⭐⭐ Sangat Puas / Istimewa'
+    };
+
+    ratingInputs.forEach(input => {
+        input.addEventListener('change', (e) => {
+            const nilai = e.target.value;
+            ratingText.innerText = labelNilai[nilai];
+            ratingText.style.color = '#e67e22';
+        });
+    });
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        
+        submitBtn.innerText = "Memproses Pengiriman...";
+        submitBtn.disabled = true;
+
+        fetch(form.action, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+            modal.classList.add('active');
+            form.reset();
+            ratingText.innerText = "Pilih Bintang";
+            ratingText.style.color = "#7f8c8d";
+        })
+        .catch(error => {
+            modal.classList.add('active');
+            form.reset();
+            ratingText.innerText = "Pilih Bintang";
+            ratingText.style.color = "#7f8c8d";
+        })
+        .finally(() => {
+            submitBtn.innerText = "KIRIM MASUKAN";
+            submitBtn.disabled = false;
+        });
+    });
+
+    function closeModal() {
+        modal.classList.remove('active');
+    }
+</script>
+
+</body>
+</html>
