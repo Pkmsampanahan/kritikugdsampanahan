@@ -39,7 +39,7 @@
             background-color: var(--background-color);
             color: var(--text-color);
             margin: 0;
-            padding: 10px; /* Diperkecil agar ramah layar HP */
+            padding: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -89,12 +89,49 @@
             margin-bottom: 22px;
         }
 
+        .form-group-identity {
+            transition: all 0.4s ease;
+            max-height: 200px;
+            opacity: 1;
+            overflow: hidden;
+        }
+
+        .form-group-identity.hidden {
+            max-height: 0;
+            opacity: 0;
+            margin-bottom: 0;
+            pointer-events: none;
+        }
+
         label {
             display: block;
             font-weight: 600;
             margin-bottom: 8px;
             font-size: 14px;
             color: var(--secondary-color);
+        }
+
+        .anonim-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #fdf2e9;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #fadbd8;
+            cursor: pointer;
+            user-select: none;
+            margin-bottom: 22px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #d35400;
+        }
+
+        .anonim-checkbox input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--accent-color);
         }
 
         input[type="text"],
@@ -117,6 +154,17 @@
             background-color: #fff;
             box-shadow: 0 4px 12px rgba(0, 137, 123, 0.15);
             transform: translateY(-1px);
+        }
+
+        .textarea-container {
+            position: relative;
+        }
+
+        .char-counter {
+            text-align: right;
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 5px;
         }
 
         .rating-container {
@@ -264,6 +312,18 @@
             line-height: 1.5;
         }
 
+        .ticket-box {
+            background: #f4f6f6;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 15px;
+            color: #2c3e50;
+            border: 1px dashed #bdc3c7;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
         .btn-close {
             background-color: var(--primary-color);
             color: white;
@@ -280,23 +340,21 @@
             background-color: var(--secondary-color);
         }
 
-        /* ------------------------------------------
-           ⚡ PERUBAHAN OTOMATIS SAAT MODE HP (MEDIA QUERIES)
-        ------------------------------------------ */
+        /* MEDIA QUERIES MODE HP */
         @media screen and (max-width: 480px) {
             body {
                 padding: 10px 5px;
-                align-items: flex-start; /* Agar tidak terpotong di HP pendek */
+                align-items: flex-start;
             }
 
             .container {
-                padding: 22px 18px; /* Mengurangi padding dalam agar ruang input lebih luas */
+                padding: 22px 18px;
                 border-radius: 12px;
                 margin: 10px auto;
             }
 
             .header h1 {
-                font-size: 20px; /* Mengecilkan judul agar tidak pecah/turun baris */
+                font-size: 20px;
             }
 
             .header p {
@@ -304,7 +362,7 @@
             }
 
             label {
-                font-size: 13px; /* Label lebih proporsional untuk HP */
+                font-size: 13px;
             }
 
             input[type="text"],
@@ -313,12 +371,12 @@
             textarea,
             select {
                 padding: 10px 12px;
-                font-size: 14px; /* Ukuran teks input disesuaikan */
+                font-size: 14px;
                 border-radius: 6px;
             }
 
             .rating-box label {
-                font-size: 30px; /* Ukuran bintang dikecilkan agar pas di layar ramping */
+                font-size: 30px;
                 gap: 8px;
             }
 
@@ -349,19 +407,26 @@
     </div>
 
     <form id="feedbackForm" action="https://script.google.com/macros/s/AKfycbzBc5NL1ua90Mq7e6UbjV1f72OM1fAStnrecFjp1Pxzodv_4UfcvJGSLf7Ak3K_RU61/exec" method="POST">
+        
         <div class="form-group">
             <label for="tanggal">📅 Tanggal Kunjungan *</label>
             <input type="date" id="tanggal" name="tanggal" required>
         </div>
 
-        <div class="form-group">
-            <label for="nama">👤 Nama Anda (Bisa dikosongkan)</label>
-            <input type="text" id="nama" name="nama" placeholder="Contoh: Pengunjung UGD">
-        </div>
+        <label class="anonim-checkbox">
+            <input type="checkbox" id="chkAnonim"> 🕶️ Kirim sebagai Anonim (Sembunyikan Identitas)
+        </label>
 
-        <div class="form-group">
-            <label for="kontak">📞 Nomor HP / WhatsApp (Opsional)</label>
-            <input type="tel" id="kontak" name="kontak" placeholder="Boleh dikosongkan jika ingin Anonim">
+        <div id="identitasSection" class="form-group-identity">
+            <div class="form-group">
+                <label for="nama">👤 Nama Anda</label>
+                <input type="text" id="nama" name="nama" placeholder="Contoh: Pengunjung UGD">
+            </div>
+
+            <div class="form-group">
+                <label for="kontak">📞 Nomor HP / WhatsApp</label>
+                <input type="tel" id="kontak" name="kontak" placeholder="Contoh: 081234567xxx">
+            </div>
         </div>
 
         <div class="form-group">
@@ -392,7 +457,10 @@
 
         <div class="form-group">
             <label for="pesan">📝 Detail Kritik & Saran *</label>
-            <textarea id="pesan" name="pesan" placeholder="Ceritakan pengalaman Anda secara jelas dan objektif di sini..." required></textarea>
+            <div class="textarea-container">
+                <textarea id="pesan" name="pesan" maxlength="500" placeholder="Ceritakan pengalaman Anda secara jelas dan objektif di sini..." required></textarea>
+                <div class="char-counter" id="charCounter">0 / 500 karakter</div>
+            </div>
         </div>
 
         <button type="submit" class="btn-submit" id="submitBtn">KIRIM MASUKAN</button>
@@ -408,6 +476,7 @@
     <div class="modal-content">
         <div class="success-icon">✓</div>
         <h3>Berhasil Terkirim!</h3>
+        <div class="ticket-box" id="ticketId">ID TIKET: --</div>
         <p>Terima kasih banyak. Masukan Anda telah disimpan ke sistem rekapan dan sangat berharga untuk perbaikan mutu UGD Puskesmas Sampanahan.</p>
         <button class="btn-close" onclick="closeModal()">Selesai</button>
     </div>
@@ -419,15 +488,62 @@
     const submitBtn = document.getElementById('submitBtn');
     const ratingText = document.getElementById('ratingText');
     const ratingInputs = document.querySelectorAll('.rating-box input');
+    
+    // Elemen Tambahan Fitur Baru
+    const inputTanggal = document.getElementById('tanggal');
+    const chkAnonim = document.getElementById('chkAnonim');
+    const identitasSection = document.getElementById('identitasSection');
+    const inputNama = document.getElementById('nama');
+    const inputKontak = document.getElementById('kontak');
+    const pesanTextarea = document.getElementById('pesan');
+    const charCounter = document.getElementById('charCounter');
+    const ticketIdDisplay = document.getElementById('ticketId');
 
     const labelNilai = {
-        '1': '⭐ Sangat Kurang / Kecewa',
-        '2': '⭐⭐ Kurang Puas',
-        '3': '⭐⭐⭐ Cukup / Biasa Saja',
-        '4': '⭐⭐⭐⭐ Puas / Baik',
-        '5': '⭐⭐⭐⭐⭐ Sangat Puas / Istimewa'
+        '1': '😠 Sangat Kurang / Kecewa',
+        '2': '😐 Kurang Puas',
+        '3': '😑 Cukup / Biasa Saja',
+        '4': '🙂 Puas / Baik',
+        '5': '😍 Sangat Puas / Istimewa'
     };
 
+    // FITUR 1: Set Tanggal Otomatis ke Hari Ini
+    window.addEventListener('DOMContentLoaded', () => {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        let mm = today.getMonth() + 1;
+        let dd = today.getDate();
+
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+
+        inputTanggal.value = `${yyyy}-${mm}-${dd}`;
+    });
+
+    // FITUR 2: Toggle Anonimitas
+    chkAnonim.addEventListener('change', () => {
+        if (chkAnonim.checked) {
+            identitasSection.classList.add('hidden');
+            inputNama.value = "Anonim";
+            inputKontak.value = "-";
+            inputNama.disabled = true;
+            inputKontak.disabled = true;
+        } else {
+            identitasSection.classList.remove('hidden');
+            inputNama.value = "";
+            inputKontak.value = "";
+            inputNama.disabled = false;
+            inputKontak.disabled = false;
+        }
+    });
+
+    // FITUR 3: Karakter Konter pada Textarea
+    pesanTextarea.addEventListener('input', () => {
+        const currentLength = pesanTextarea.value.length;
+        charCounter.innerText = `${currentLength} / 500 karakter`;
+    });
+
+    // Handle Perubahan Bintang
     ratingInputs.forEach(input => {
         input.addEventListener('change', (e) => {
             const nilai = e.target.value;
@@ -436,30 +552,56 @@
         });
     });
 
+    // Proses Submit Form & Generate ID Tiket
     form.addEventListener('submit', e => {
         e.preventDefault();
         
         submitBtn.innerText = "Memproses Pengiriman...";
         submitBtn.disabled = true;
 
+        // Generate ID Tiket Acak Sederhana di Sisi Klien
+        const nomorAcak = Math.floor(1000 + Math.random() * 9000);
+        const formatTiket = `UGD-2026-${nomorAcak}`;
+
+        // Mengirimkan data formulir lewat Fetch API
         fetch(form.action, { method: 'POST', body: new FormData(form)})
         .then(response => {
+            ticketIdDisplay.innerText = `ID TIKET: ${formatTiket}`;
             modal.classList.add('active');
-            form.reset();
-            ratingText.innerText = "Pilih Bintang";
-            ratingText.style.color = "#7f8c8d";
+            resetForm();
         })
         .catch(error => {
+            // Tetap memunculkan modal fallback jika Apps Script berhasil input namun memicu error CORS 
+            ticketIdDisplay.innerText = `ID TIKET: ${formatTiket}`;
             modal.classList.add('active');
-            form.reset();
-            ratingText.innerText = "Pilih Bintang";
-            ratingText.style.color = "#7f8c8d";
+            resetForm();
         })
         .finally(() => {
             submitBtn.innerText = "KIRIM MASUKAN";
             submitBtn.disabled = false;
         });
     });
+
+    function resetForm() {
+        form.reset();
+        ratingText.innerText = "Pilih Bintang";
+        ratingText.style.color = "#7f8c8d";
+        charCounter.innerText = "0 / 500 karakter";
+        
+        // Kembalikan section identitas jika sebelumnya memilih anonim
+        identitasSection.classList.remove('hidden');
+        inputNama.disabled = false;
+        inputKontak.disabled = false;
+        
+        // Kembalikan tanggal otomatis setelah direset
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        let mm = today.getMonth() + 1;
+        let dd = today.getDate();
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+        inputTanggal.value = `${yyyy}-${mm}-${dd}`;
+    }
 
     function closeModal() {
         modal.classList.remove('active');
