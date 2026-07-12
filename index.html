@@ -4,20 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kritik & Saran UGD Puskesmas Sampanahan</title>
+    <!-- Menggunakan Font Sans-Serif Modern & Icon Lucide via SVG -->
     <style>
         :root {
             --primary-color: #00897b;
+            --primary-light: #e0f2f1;
             --secondary-color: #00695c;
-            --background-color: #f0f7f6;
+            --background-color: #f2f7f6;
             --text-color: #2c3e50;
             --accent-color: #e67e22;
+            --danger-color: #e74c3c;
+            --success-color: #2ecc71;
+            --border-color: #dcdde1;
         }
 
-        /* Animasi Muncul Pertama Kali (Fade In) */
+        /* Animasi Masuk */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(24px);
             }
             to {
                 opacity: 1;
@@ -25,73 +30,75 @@
             }
         }
 
-        @keyframes popIn {
-            0% { transform: scale(0.7); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        @keyframes pulseMic {
+            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
         }
 
         * {
             box-sizing: border-box;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
             background-color: var(--background-color);
             color: var(--text-color);
             margin: 0;
-            padding: 10px;
+            padding: 16px 8px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
-        /* TAMPILAN STANDAR (PC & LAPTOP) */
         .container {
             background-color: #ffffff;
-            padding: 40px 35px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 137, 123, 0.08);
-            max-width: 600px;
+            padding: 32px 24px;
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(0, 137, 123, 0.06);
+            max-width: 620px;
             width: 100%;
-            animation: fadeInUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-            margin: 20px auto;
+            animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            margin: auto;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
         }
 
         .header h1 {
             margin: 0;
-            font-size: 26px;
+            font-size: 24px;
             color: var(--secondary-color);
-            font-weight: 700;
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
         .header p {
-            margin: 8px 0 0 0;
-            font-size: 15px;
+            margin: 6px 0 0 0;
+            font-size: 14px;
             color: #7f8c8d;
         }
 
         .divider {
             height: 4px;
-            width: 60px;
+            width: 50px;
             background-color: var(--primary-color);
-            margin: 15px auto;
+            margin: 12px auto;
             border-radius: 2px;
         }
 
         .form-group {
-            margin-bottom: 22px;
+            margin-bottom: 20px;
+            position: relative;
         }
 
+        /* Seksi Identitas Dinamis */
         .form-group-identity {
-            transition: all 0.4s ease;
-            max-height: 200px;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            max-height: 250px;
             opacity: 1;
             overflow: hidden;
         }
@@ -107,154 +114,311 @@
             display: block;
             font-weight: 600;
             margin-bottom: 8px;
-            font-size: 14px;
+            font-size: 13.5px;
             color: var(--secondary-color);
         }
 
+        /* Checkbox Anonim Premium */
         .anonim-checkbox {
             display: flex;
             align-items: center;
-            gap: 10px;
-            background: #fdf2e9;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #fadbd8;
+            gap: 12px;
+            background: #fff8f2;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid #fdebd0;
             cursor: pointer;
             user-select: none;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13.5px;
             color: #d35400;
+            transition: all 0.2s ease;
+        }
+
+        .anonim-checkbox:hover {
+            background: #fdf2e9;
         }
 
         .anonim-checkbox input {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             cursor: pointer;
             accent-color: var(--accent-color);
         }
 
+        /* Input standar styling */
         input[type="text"],
         input[type="tel"],
         input[type="date"],
         textarea,
         select {
             width: 100%;
-            padding: 12px 15px;
-            border: 1.5px solid #dcdde1;
-            border-radius: 8px;
-            font-size: 15px;
-            background-color: #fbfbfb;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            padding: 12px 16px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 14.5px;
+            background-color: #fafbfc;
+            color: var(--text-color);
+            transition: all 0.25s ease;
         }
 
         input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: var(--primary-color);
-            background-color: #fff;
-            box-shadow: 0 4px 12px rgba(0, 137, 123, 0.15);
-            transform: translateY(-1px);
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 137, 123, 0.08);
         }
 
-        .textarea-container {
-            position: relative;
+        /* Fitur Baru: Slider Rating Multi-Aspek */
+        .multi-rating-box {
+            background-color: #f7faf9;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #e1e8e7;
+            margin-bottom: 12px;
         }
 
-        .char-counter {
-            text-align: right;
-            font-size: 12px;
-            color: #7f8c8d;
-            margin-top: 5px;
-        }
-
-        .rating-container {
-            background-color: #f8faf9;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px dashed #ced6d4;
-            text-align: center;
-        }
-
-        .rating-box {
+        .rating-row {
             display: flex;
-            flex-direction: row-reverse;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 5px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
         }
 
-        .rating-box input {
-            display: none;
-        }
-
-        .rating-box label {
-            font-size: 36px;
-            color: #d1d8d6;
-            cursor: pointer;
-            transition: transform 0.2s ease, color 0.2s ease;
+        .rating-row:last-child {
             margin-bottom: 0;
         }
 
-        .rating-box label:hover {
-            transform: scale(1.25);
+        .rating-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-color);
+            width: 45%;
         }
 
-        .rating-box input:checked ~ label,
-        .rating-box label:hover,
-        .rating-box label:hover ~ label {
+        .stars {
+            display: flex;
+            flex-direction: row-reverse;
+            gap: 4px;
+        }
+
+        .stars input {
+            display: none;
+        }
+
+        .stars label {
+            font-size: 24px;
+            color: #cbd5e1;
+            cursor: pointer;
+            transition: transform 0.1s ease, color 0.15s ease;
+            margin: 0;
+        }
+
+        .stars label:hover,
+        .stars label:hover ~ label,
+        .stars input:checked ~ label {
             color: var(--accent-color);
         }
 
-        .rating-text {
-            font-size: 13px;
-            font-weight: bold;
-            color: #7f8c8d;
-            height: 18px;
+        .avg-rating-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--primary-light);
+            color: var(--secondary-color);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 8px;
+            font-weight: 700;
+            font-size: 13.5px;
+        }
+
+        /* Fitur Baru: Tombol Tag Pintasan Cepat */
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+            min-height: 28px;
+        }
+
+        .tag-btn {
+            background-color: #eef2f3;
+            color: #475569;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tag-btn:hover {
+            background-color: var(--primary-light);
+            color: var(--secondary-color);
+        }
+
+        /* Fitur Baru: Kolom Dikte Suara (Voice Typing) */
+        .input-action-wrapper {
+            position: relative;
         }
 
         textarea {
             resize: vertical;
-            height: 110px;
+            height: 100px;
+            padding-right: 48px; /* Ruang untuk tombol mic */
         }
 
+        .mic-btn {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            background-color: #f1f5f9;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .mic-btn:hover {
+            background-color: #e2e8f0;
+            transform: scale(1.05);
+        }
+
+        .mic-btn.listening {
+            background-color: var(--danger-color);
+            color: white;
+            animation: pulseMic 1.5s infinite;
+        }
+
+        .mic-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .char-counter {
+            text-align: right;
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        /* Fitur Baru: Unggah Foto dengan Preview */
+        .upload-container {
+            border: 1.5px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 14px;
+            background-color: #fafbfc;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .upload-container:hover {
+            border-color: var(--primary-color);
+            background-color: #f0fdfa;
+        }
+
+        .upload-container p {
+            margin: 4px 0 0 0;
+            font-size: 12.5px;
+            color: #64748b;
+        }
+
+        .upload-input {
+            display: none;
+        }
+
+        .preview-wrapper {
+            display: none;
+            margin-top: 10px;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            max-height: 160px;
+        }
+
+        .preview-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .btn-remove-photo {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Tombol Kirim */
         .btn-submit {
             background-color: var(--primary-color);
             color: white;
-            padding: 15px;
+            padding: 14px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
+            font-size: 15.5px;
+            font-weight: 700;
             width: 100%;
             margin-top: 15px;
-            box-shadow: 0 4px 6px rgba(0, 137, 123, 0.2);
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 137, 123, 0.15);
+            transition: all 0.25s ease;
             letter-spacing: 0.5px;
         }
 
         .btn-submit:hover {
             background-color: var(--secondary-color);
-            box-shadow: 0 6px 15px rgba(0, 137, 123, 0.3);
-            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 137, 123, 0.25);
+            transform: translateY(-1.5px);
+        }
+
+        .btn-submit:disabled {
+            background-color: #cbd5e1;
+            color: #64748b;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
         }
 
         .footer {
             text-align: center;
-            margin-top: 25px;
+            margin-top: 24px;
             font-size: 12px;
-            color: #95a5a6;
+            color: #94a3b8;
             line-height: 1.6;
         }
 
-        /* MODAL ANIMASI POP-UP */
+        /* MODAL POP-UP */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -271,13 +435,13 @@
 
         .modal-content {
             background: white;
-            padding: 30px;
-            border-radius: 16px;
+            padding: 28px;
+            border-radius: 20px;
             text-align: center;
-            max-width: 400px;
-            width: 85%;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            transform: scale(0.7);
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            transform: scale(0.85);
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
@@ -286,40 +450,40 @@
         }
 
         .success-icon {
-            width: 70px;
-            height: 70px;
-            background: #e8f5e9;
-            color: #2e7d32;
+            width: 64px;
+            height: 64px;
+            background: #ecfdf5;
+            color: var(--success-color);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 35px;
-            margin: 0 auto 20px auto;
-            animation: popIn 0.5s 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+            font-size: 30px;
+            margin: 0 auto 16px auto;
         }
 
         .modal-content h3 {
-            margin: 0 0 10px 0;
+            margin: 0 0 8px 0;
             color: var(--secondary-color);
             font-size: 20px;
+            font-weight: 700;
         }
 
         .modal-content p {
-            margin: 0 0 20px 0;
-            color: #555;
-            font-size: 14px;
+            margin: 0 0 16px 0;
+            color: #475569;
+            font-size: 13.5px;
             line-height: 1.5;
         }
 
         .ticket-box {
-            background: #f4f6f6;
+            background: #f8fafc;
             padding: 10px;
-            border-radius: 6px;
-            font-family: monospace;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
             font-size: 15px;
-            color: #2c3e50;
-            border: 1px dashed #bdc3c7;
+            color: #0f172a;
+            border: 1px dashed #cbd5e1;
             margin-bottom: 20px;
             font-weight: bold;
         }
@@ -328,8 +492,8 @@
             background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 12px 30px;
-            border-radius: 6px;
+            padding: 11px 28px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             font-size: 14px;
@@ -340,59 +504,59 @@
             background-color: var(--secondary-color);
         }
 
-        /* MEDIA QUERIES MODE HP */
+        /* Notifikasi Melayang */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(15, 23, 42, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            z-index: 10000;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* MEDIA QUERIES UNTUK HP */
         @media screen and (max-width: 480px) {
             body {
-                padding: 10px 5px;
-                align-items: flex-start;
+                padding: 12px 6px;
             }
 
             .container {
-                padding: 22px 18px;
-                border-radius: 12px;
-                margin: 10px auto;
+                padding: 24px 16px;
+                border-radius: 16px;
             }
 
             .header h1 {
-                font-size: 20px;
+                font-size: 19px;
             }
 
             .header p {
-                font-size: 13px;
+                font-size: 12.5px;
             }
 
-            label {
-                font-size: 13px;
+            .rating-label {
+                width: 40%;
+                font-size: 12px;
             }
 
-            input[type="text"],
-            input[type="tel"],
-            input[type="date"],
-            textarea,
-            select {
-                padding: 10px 12px;
-                font-size: 14px;
-                border-radius: 6px;
-            }
-
-            .rating-box label {
-                font-size: 30px;
-                gap: 8px;
+            .stars label {
+                font-size: 20px;
             }
 
             .btn-submit {
-                padding: 13px;
-                font-size: 15px;
-            }
-
-            .modal-content {
-                padding: 20px;
-            }
-
-            .success-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 30px;
+                padding: 12px;
+                font-size: 14.5px;
             }
         }
     </style>
@@ -406,6 +570,7 @@
         <div class="divider"></div>
     </div>
 
+    <!-- Tetap menggunakan endpoint Google Apps Script milik Anda -->
     <form id="feedbackForm" action="https://script.google.com/macros/s/AKfycbzBc5NL1ua90Mq7e6UbjV1f72OM1fAStnrecFjp1Pxzodv_4UfcvJGSLf7Ak3K_RU61/exec" method="POST">
         
         <div class="form-group">
@@ -429,18 +594,48 @@
             </div>
         </div>
 
+        <!-- FITUR BARU: Rating Multi-Aspek (Otomatis menghitung rata-rata untuk dikirim ke Sheets) -->
         <div class="form-group">
-            <label>⭐ Kepuasan Pelayanan UGD *</label>
-            <div class="rating-container">
-                <div class="rating-box">
-                    <input type="radio" id="star5" name="rating" value="5" required><label for="star5">★</label>
-                    <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
-                    <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
-                    <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
-                    <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+            <label>⭐ Kepuasan Pelayanan UGD (Multi-Aspek) *</label>
+            <div class="multi-rating-box">
+                <div class="rating-row">
+                    <span class="rating-label">🤝 Keramahan Petugas</span>
+                    <div class="stars" data-category="ramah">
+                        <input type="radio" id="ramah5" name="rating_ramah" value="5"><label for="ramah5">★</label>
+                        <input type="radio" id="ramah4" name="rating_ramah" value="4"><label for="ramah4">★</label>
+                        <input type="radio" id="ramah3" name="rating_ramah" value="3"><label for="ramah3">★</label>
+                        <input type="radio" id="ramah2" name="rating_ramah" value="2"><label for="ramah2">★</label>
+                        <input type="radio" id="ramah1" name="rating_ramah" value="1"><label for="ramah1">★</label>
+                    </div>
                 </div>
-                <div class="rating-text" id="ratingText">Pilih Bintang</div>
+                <div class="rating-row">
+                    <span class="rating-label">⚡ Kecepatan Respon</span>
+                    <div class="stars" data-category="cepat">
+                        <input type="radio" id="cepat5" name="rating_cepat" value="5"><label for="cepat5">★</label>
+                        <input type="radio" id="cepat4" name="rating_cepat" value="4"><label for="cepat4">★</label>
+                        <input type="radio" id="cepat3" name="rating_cepat" value="3"><label for="cepat3">★</label>
+                        <input type="radio" id="cepat2" name="rating_cepat" value="2"><label for="cepat2">★</label>
+                        <input type="radio" id="cepat1" name="rating_cepat" value="1"><label for="cepat1">★</label>
+                    </div>
+                </div>
+                <div class="rating-row">
+                    <span class="rating-label">✨ Kebersihan Ruang UGD</span>
+                    <div class="stars" data-category="bersih">
+                        <input type="radio" id="bersih5" name="rating_bersih" value="5"><label for="bersih5">★</label>
+                        <input type="radio" id="bersih4" name="rating_bersih" value="4"><label for="bersih4">★</label>
+                        <input type="radio" id="bersih3" name="rating_bersih" value="3"><label for="bersih3">★</label>
+                        <input type="radio" id="bersih2" name="rating_bersih" value="2"><label for="bersih2">★</label>
+                        <input type="radio" id="bersih1" name="rating_bersih" value="1"><label for="bersih1">★</label>
+                    </div>
+                </div>
+
+                <div class="avg-rating-indicator">
+                    <span>Skor Rata-Rata Kepuasan:</span>
+                    <strong id="avgRatingText">Pilih Bintang</strong>
+                </div>
             </div>
+            <!-- Input rating utama tersembunyi yang akan dikirim ke Server Anda (kompatibel dengan sistem lama) -->
+            <input type="hidden" id="rating" name="rating" value="" required>
         </div>
 
         <div class="form-group">
@@ -453,14 +648,48 @@
                 <option value="Alur & Administrasi">Alur Pendaftaran & Administrasi</option>
                 <option value="Lain-lain">Lainnya</option>
             </select>
+            
+            <!-- FITUR BARU: Suggestion Tags Dinamis -->
+            <div class="tag-container" id="tagContainer">
+                <!-- Tag diisi dinamis via JavaScript sesuai kategori yang dipilih -->
+            </div>
         </div>
 
         <div class="form-group">
             <label for="pesan">📝 Detail Kritik & Saran *</label>
-            <div class="textarea-container">
+            <div class="input-action-wrapper">
                 <textarea id="pesan" name="pesan" maxlength="500" placeholder="Ceritakan pengalaman Anda secara jelas dan objektif di sini..." required></textarea>
-                <div class="char-counter" id="charCounter">0 / 500 karakter</div>
+                
+                <!-- FITUR BARU: Tombol Voice-to-Text -->
+                <button type="button" class="mic-btn" id="micBtn" title="Diktekan Suara (Bicara)">
+                    <svg viewBox="0 0 24 24" id="micIcon">
+                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
+                        <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
+                    </svg>
+                </button>
             </div>
+            <div class="char-counter" id="charCounter">0 / 500 karakter</div>
+        </div>
+
+        <!-- FITUR BARU: Input Unggah Lampiran Foto / Gambar -->
+        <div class="form-group">
+            <label>📸 Foto Bukti / Lampiran pendukung (Opsional)</label>
+            <div class="upload-container" onclick="document.getElementById('fotoInput').click()">
+                <svg width="24" height="24" fill="none" stroke="#00897b" stroke-width="2" viewBox="0 0 24 24" style="margin: auto;">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+                <p id="uploadText">Klik untuk ambil foto / upload gambar</p>
+                <input type="file" id="fotoInput" class="upload-input" accept="image/*">
+            </div>
+            <!-- Preview Gambar terpilih -->
+            <div class="preview-wrapper" id="previewWrapper">
+                <img src="" alt="Preview Lampiran" class="preview-img" id="previewImg">
+                <button type="button" class="btn-remove-photo" id="btnRemovePhoto" title="Hapus foto">×</button>
+            </div>
+            <!-- Input tersembunyi Base64 untuk dikirim lewat AJAX -->
+            <input type="hidden" id="fotoBase64" name="fotoBase64" value="">
+            <input type="hidden" id="fotoNama" name="fotoNama" value="">
         </div>
 
         <button type="submit" class="btn-submit" id="submitBtn">KIRIM MASUKAN</button>
@@ -482,14 +711,16 @@
     </div>
 </div>
 
+<!-- Elemen Toast Notifikasi -->
+<div class="toast" id="toast">
+    <span id="toastText">Pesan Notifikasi</span>
+</div>
+
 <script>
     const form = document.getElementById('feedbackForm');
     const modal = document.getElementById('successModal');
     const submitBtn = document.getElementById('submitBtn');
-    const ratingText = document.getElementById('ratingText');
-    const ratingInputs = document.querySelectorAll('.rating-box input');
     
-    // Elemen Tambahan Fitur Baru
     const inputTanggal = document.getElementById('tanggal');
     const chkAnonim = document.getElementById('chkAnonim');
     const identitasSection = document.getElementById('identitasSection');
@@ -499,15 +730,39 @@
     const charCounter = document.getElementById('charCounter');
     const ticketIdDisplay = document.getElementById('ticketId');
 
-    const labelNilai = {
-        '1': '😠 Sangat Kurang / Kecewa',
-        '2': '😐 Kurang Puas',
-        '3': '😑 Cukup / Biasa Saja',
-        '4': '🙂 Puas / Baik',
-        '5': '😍 Sangat Puas / Istimewa'
+    // Element untuk fitur baru
+    const tagContainer = document.getElementById('tagContainer');
+    const kategoriSelect = document.getElementById('kategori');
+    const micBtn = document.getElementById('micBtn');
+    const fotoInput = document.getElementById('fotoInput');
+    const previewWrapper = document.getElementById('previewWrapper');
+    const previewImg = document.getElementById('previewImg');
+    const btnRemovePhoto = document.getElementById('btnRemovePhoto');
+    const fotoBase64 = document.getElementById('fotoBase64');
+    const fotoNama = document.getElementById('fotoNama');
+    const toast = document.getElementById('toast');
+    const toastText = document.getElementById('toastText');
+    const avgRatingText = document.getElementById('avgRatingText');
+    const ratingInputUtama = document.getElementById('rating');
+
+    // Data Pilihan Tag Pintas per Kategori
+    const databaseTag = {
+        "Pelayanan Petugas": ["Sikap perawat ramah", "Dokter sangat teliti", "Petugas kurang responsif", "Bidan sangat sabar", "Komunikasi jelas"],
+        "Kecepatan Respon": ["Penanganan cepat", "Sangat sigap darurat", "Waktu tunggu dokter lama", "Pemeriksaan cepat", "Gerak cepat"],
+        "Fasilitas Kamar": ["AC kurang dingin", "Kamar bersih", "Bau tidak sedap", "Kursi tunggu nyaman", "Sprei kotor", "Tempat tidur bersih"],
+        "Ketersediaan Obat": ["Obat lengkap", "Harus beli obat di luar", "Penjelasan obat jelas", "Apotek cepat melayani"],
+        "Alur & Administrasi": ["Alur pendaftaran jelas", "Petugas admin cekatan", "Syarat rumit", "Informasi biaya transparan"],
+        "Lain-lain": ["Puas secara umum", "Perlu peningkatan", "Terima kasih UGD", "Saran parkir diperluas"]
     };
 
-    // FITUR 1: Set Tanggal Otomatis ke Hari Ini
+    // Objek penyimpan poin rating individu
+    let individualRatings = {
+        ramah: 0,
+        cepat: 0,
+        bersih: 0
+    };
+
+    // Set Tanggal Otomatis ke Hari Ini & load draf lokal
     window.addEventListener('DOMContentLoaded', () => {
         const today = new Date();
         const yyyy = today.getFullYear();
@@ -518,9 +773,30 @@
         if (mm < 10) mm = '0' + mm;
 
         inputTanggal.value = `${yyyy}-${mm}-${dd}`;
+        
+        // Memuat tag rekomendasi awal
+        updateTagPilihan();
+        
+        // Memuat draft pesan yang belum terkirim jika ada
+        if (localStorage.getItem('draft_pesan')) {
+            pesanTextarea.value = localStorage.getItem('draft_pesan');
+            updateCharCounter();
+            showToast("Melanjutkan draf masukan terakhir.");
+        }
     });
 
-    // FITUR 2: Toggle Anonimitas
+    // Menangani Penyimpanan Draf Pesan
+    pesanTextarea.addEventListener('input', () => {
+        updateCharCounter();
+        localStorage.setItem('draft_pesan', pesanTextarea.value);
+    });
+
+    function updateCharCounter() {
+        const currentLength = pesanTextarea.value.length;
+        charCounter.innerText = `${currentLength} / 500 karakter`;
+    }
+
+    // Toggle Anonimitas
     chkAnonim.addEventListener('change', () => {
         if (chkAnonim.checked) {
             identitasSection.classList.add('hidden');
@@ -537,43 +813,235 @@
         }
     });
 
-    // FITUR 3: Karakter Konter pada Textarea
-    pesanTextarea.addEventListener('input', () => {
-        const currentLength = pesanTextarea.value.length;
-        charCounter.innerText = `${currentLength} / 500 karakter`;
-    });
-
-    // Handle Perubahan Bintang
-    ratingInputs.forEach(input => {
-        input.addEventListener('change', (e) => {
-            const nilai = e.target.value;
-            ratingText.innerText = labelNilai[nilai];
-            ratingText.style.color = '#e67e22';
+    // FITUR: Penilaian Multi-Aspek (Rata-Rata Dinamis)
+    const ratingGroups = document.querySelectorAll('.stars');
+    ratingGroups.forEach(group => {
+        const category = group.getAttribute('data-category');
+        const inputs = group.querySelectorAll('input');
+        
+        inputs.forEach(input => {
+            input.addEventListener('change', (e) => {
+                individualRatings[category] = parseInt(e.target.value);
+                kalkulasiRatingRataRata();
+            });
         });
     });
+
+    function kalkulasiRatingRataRata() {
+        const scores = Object.values(individualRatings).filter(val => val > 0);
+        if (scores.length === 3) {
+            const sum = scores.reduce((a, b) => a + b, 0);
+            const avg = (sum / 3).toFixed(1);
+            
+            // Konversi nilai rata-rata desimal menjadi deskripsi
+            let labelRating = "";
+            if (avg >= 4.5) labelRating = "⭐ " + avg + " (Sangat Puas)";
+            else if (avg >= 3.5) labelRating = "⭐ " + avg + " (Puas)";
+            else if (avg >= 2.5) labelRating = "⭐ " + avg + " (Cukup)";
+            else if (avg >= 1.5) labelRating = "⭐ " + avg + " (Kurang)";
+            else labelRating = "⭐ " + avg + " (Sangat Kecewa)";
+            
+            avgRatingText.innerText = labelRating;
+            avgRatingText.style.color = '#00897b';
+            
+            // Masukkan nilai pembulatan terdekat ke input rating utama (1-5) untuk dikirim ke Google Sheets
+            ratingInputUtama.value = Math.round(avg);
+        } else {
+            avgRatingText.innerText = "Selesaikan pengisian semua aspek";
+            avgRatingText.style.color = '#7f8c8d';
+            ratingInputUtama.value = "";
+        }
+    }
+
+    // FITUR: Dinamisasi Tag Rekomendasi berdasarkan Kategori Pilihan
+    kategoriSelect.addEventListener('change', updateTagPilihan);
+
+    function updateTagPilihan() {
+        tagContainer.innerHTML = '';
+        const selectedKategori = kategoriSelect.value;
+        const listTag = databaseTag[selectedKategori] || [];
+
+        listTag.forEach(tag => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'tag-btn';
+            btn.innerText = tag;
+            btn.addEventListener('click', () => {
+                let currentText = pesanTextarea.value.trim();
+                if (currentText.length > 0) {
+                    currentText += ', ' + tag.toLowerCase();
+                } else {
+                    currentText = tag;
+                }
+                
+                if(currentText.length <= 500) {
+                    pesanTextarea.value = currentText;
+                    updateCharCounter();
+                    localStorage.setItem('draft_pesan', currentText);
+                } else {
+                    showToast("Batas pengetikan kritik/saran maksimum telah dicapai!");
+                }
+            });
+            tagContainer.appendChild(btn);
+        });
+    }
+
+    // FITUR: Voice-to-Text (Perekaman Suara ke Kotak Kritik & Saran)
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'id-ID'; // Mengatur bahasa ke Indonesia
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        let isListening = false;
+
+        micBtn.addEventListener('click', () => {
+            if (!isListening) {
+                recognition.start();
+            } else {
+                recognition.stop();
+            }
+        });
+
+        recognition.onstart = () => {
+            isListening = true;
+            micBtn.classList.add('listening');
+            showToast("Mendengarkan... Silakan berbicara ke mic.");
+        };
+
+        recognition.onerror = (event) => {
+            console.error("Kesalahan Speech Recognition: ", event.error);
+            showToast("Gagal memproses suara. Coba lagi.");
+            stopMic();
+        };
+
+        recognition.onend = () => {
+            stopMic();
+        };
+
+        recognition.onresult = (event) => {
+            const speechToText = event.results[0][0].transcript;
+            let currentText = pesanTextarea.value;
+            if (currentText.length > 0) {
+                pesanTextarea.value = currentText + " " + speechToText;
+            } else {
+                pesanTextarea.value = speechToText;
+            }
+            updateCharCounter();
+            localStorage.setItem('draft_pesan', pesanTextarea.value);
+            showToast("Suara berhasil diubah ke teks!");
+        };
+
+        function stopMic() {
+            isListening = false;
+            micBtn.classList.remove('listening');
+        }
+    } else {
+        // Matikan fungsi mic jika browser tidak mendukung
+        micBtn.style.display = 'none';
+        console.warn("Dikte suara tidak didukung di browser ini.");
+    }
+
+    // FITUR: Kompresi Gambar & Konversi ke Base64
+    fotoInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Validasi ukuran (Maksimum file asli sebelum kompresi 8MB)
+        if (file.size > 8 * 1024 * 1024) {
+            showToast("Ukuran foto terlalu besar. Gunakan ukuran di bawah 8MB.");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const imgElement = document.createElement('img');
+            imgElement.src = event.target.result;
+
+            imgElement.onload = function() {
+                // Proses kompresi file agar ringan untuk diunggah ke Google Sheets
+                const canvas = document.createElement('canvas');
+                const MAX_WIDTH = 800; // Maksimum resolusi lebar gambar
+                const scaleSize = MAX_WIDTH / imgElement.width;
+                
+                if (imgElement.width > MAX_WIDTH) {
+                    canvas.width = MAX_WIDTH;
+                    canvas.height = imgElement.height * scaleSize;
+                } else {
+                    canvas.width = imgElement.width;
+                    canvas.height = imgElement.height;
+                }
+
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
+
+                // Convert canvas menjadi base64 dengan quality kompresi 0.7
+                const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                
+                previewImg.src = compressedBase64;
+                previewWrapper.style.display = 'block';
+                
+                // Menyimpan data base64 bersih (tanpa tipe skema data:image/jpeg;base64)
+                fotoBase64.value = compressedBase64.split(',')[1];
+                fotoNama.value = file.name;
+                
+                document.getElementById('uploadText').innerText = "Gambar terlampir: " + file.name;
+                showToast("Foto berhasil dilampirkan.");
+            };
+        };
+        reader.readAsDataURL(file);
+    });
+
+    // Menghapus Foto yang dipilih
+    btnRemovePhoto.addEventListener('click', () => {
+        fotoInput.value = '';
+        previewImg.src = '';
+        previewWrapper.style.display = 'none';
+        fotoBase64.value = '';
+        fotoNama.value = '';
+        document.getElementById('uploadText').innerText = "Klik untuk ambil foto / upload gambar";
+        showToast("Foto lampiran dihapus.");
+    });
+
+    // Menampilkan Notifikasi Toast Sederhana
+    function showToast(message) {
+        toastText.innerText = message;
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
 
     // Proses Submit Form & Generate ID Tiket
     form.addEventListener('submit', e => {
         e.preventDefault();
         
+        // Memastikan semua aspek rating sudah terpilih sebelum submit
+        if (!ratingInputUtama.value) {
+            showToast("Harap selesaikan pengisian 3 aspek rating bintang terlebih dahulu.");
+            return;
+        }
+
         submitBtn.innerText = "Memproses Pengiriman...";
         submitBtn.disabled = true;
 
-        // Generate ID Tiket Acak Sederhana di Sisi Klien
         const nomorAcak = Math.floor(1000 + Math.random() * 9000);
         const formatTiket = `UGD-2026-${nomorAcak}`;
 
-        // Mengirimkan data formulir lewat Fetch API
+        // Mengirimkan data formulir lengkap lewat Fetch API (dengan data base64)
         fetch(form.action, { method: 'POST', body: new FormData(form)})
         .then(response => {
             ticketIdDisplay.innerText = `ID TIKET: ${formatTiket}`;
             modal.classList.add('active');
+            localStorage.removeItem('draft_pesan'); // Hapus draf sukses terkirim
             resetForm();
         })
         .catch(error => {
             // Tetap memunculkan modal fallback jika Apps Script berhasil input namun memicu error CORS 
             ticketIdDisplay.innerText = `ID TIKET: ${formatTiket}`;
             modal.classList.add('active');
+            localStorage.removeItem('draft_pesan');
             resetForm();
         })
         .finally(() => {
@@ -584,16 +1052,27 @@
 
     function resetForm() {
         form.reset();
-        ratingText.innerText = "Pilih Bintang";
-        ratingText.style.color = "#7f8c8d";
+        avgRatingText.innerText = "Pilih Bintang";
+        avgRatingText.style.color = "#7f8c8d";
         charCounter.innerText = "0 / 500 karakter";
         
+        // Bersihkan data rating dinamis
+        individualRatings = { ramah: 0, cepat: 0, bersih: 0 };
+        ratingInputUtama.value = "";
+        
+        // Reset Lampiran Foto
+        previewImg.src = '';
+        previewWrapper.style.display = 'none';
+        fotoBase64.value = '';
+        fotoNama.value = '';
+        document.getElementById('uploadText').innerText = "Klik untuk ambil foto / upload gambar";
+
         // Kembalikan section identitas jika sebelumnya memilih anonim
         identitasSection.classList.remove('hidden');
         inputNama.disabled = false;
         inputKontak.disabled = false;
         
-        // Kembalikan tanggal otomatis setelah direset
+        // Kembalikan tanggal otomatis ke hari ini setelah direset
         const today = new Date();
         const yyyy = today.getFullYear();
         let mm = today.getMonth() + 1;
@@ -601,6 +1080,8 @@
         if (dd < 10) dd = '0' + dd;
         if (mm < 10) mm = '0' + mm;
         inputTanggal.value = `${yyyy}-${mm}-${dd}`;
+
+        updateTagPilihan();
     }
 
     function closeModal() {
@@ -610,3 +1091,5 @@
 
 </body>
 </html>
+
+```
