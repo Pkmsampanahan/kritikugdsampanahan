@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cetak Poster Kritik UGD Sampanahan</title>
+    <style>
+        :root {
+            --primary-color: #00897b;
+            --secondary-color: #004d40;
+            --accent-color: #e67e22;
+            --text-dark: #1e293b;
+            --bg-light: #f8fafc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #cbd5e1;
+            padding: 60px 20px 20px 20px; /* Ditambah padding atas untuk ruang tombol floating */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* FITUR BARU: Tombol Cetak Floating */
+        .print-actions {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 9999;
+        }
+
+        .btn-print {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-print:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+        }
+
+        .btn-print svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* Ukuran standar Kertas F4 Landscape (330mm x 215mm) */
+        .page-f4-landscape {
+            width: 330mm;
+            height: 215mm;
+            background-color: #ffffff;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            display: flex;
+            position: relative;
+            overflow: hidden;
+            padding: 10mm;
+        }
+
+        /* Garis Potong Tengah Lembaran */
+        .cut-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            border-left: 2px dashed #94a3b8;
+            z-index: 10;
+        }
+
+        /* Ikon Gunting Kecil pada Garis */
+        .cut-line::before {
+            content: "✂️";
+            position: absolute;
+            top: 10px;
+            left: -10px;
+            font-size: 16px;
+            background: white;
+            padding: 2px;
+        }
+
+        .cut-line::after {
+            content: "✂️";
+            position: absolute;
+            bottom: 10px;
+            left: -10px;
+            font-size: 16px;
+            background: white;
+            padding: 2px;
+        }
+
+        /* Setengah Halaman (1 Lembar Jadi 2) */
+        .poster-half {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 25px;
+            text-align: center;
+        }
+
+        /* Header Medis */
+        .header {
+            width: 100%;
+        }
+
+        .instansi {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .judul-utama {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--secondary-color);
+            line-height: 1.2;
+            text-transform: uppercase;
+        }
+
+        .sub-judul {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        .divider {
+            height: 4px;
+            width: 80px;
+            background: var(--accent-color);
+            margin: 12px auto;
+            border-radius: 2px;
+        }
+
+        /* Area QR Code & Instruksi */
+        .qr-section {
+            background: var(--bg-light);
+            border: 3px solid var(--primary-color);
+            border-radius: 20px;
+            padding: 20px;
+            width: 90%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Placeholder Kotak QR Code Otomatis menggunakan API */
+        .qr-code {
+            width: 160px;
+            height: 160px;
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .qr-instruction {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .link-text {
+            font-size: 12px;
+            color: var(--primary-color);
+            font-family: monospace;
+            background: #e0f2f1;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        /* Bagian Kaki Informasi */
+        .footer-info {
+            width: 100%;
+            background: var(--secondary-color);
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .footer-info strong {
+            color: #ffd700;
+        }
+
+        /* ATURAN KHUSUS MENGHILANGKAN TOMBOL SAAT DICETAK */
+        @media print {
+            @page {
+                size: 330mm 215mm; /* Ukuran Resmi Kertas F4 Landscape */
+                margin: 0;
+            }
+            body {
+                background-color: #ffffff;
+                padding: 0;
+                margin: 0;
+            }
+            .print-actions {
+                display: none !important; /* Menyembunyikan tombol cetak total agar tidak ikut ter-print */
+            }
+            .page-f4-landscape {
+                box-shadow: none;
+                width: 330mm;
+                height: 215mm;
+                padding: 10mm;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Kontainer Tombol Cetak (Hanya tampil di layar web browser) -->
+<div class="print-actions">
+    <button class="btn-print" onclick="window.print()">
+        <svg viewBox="0 0 24 24">
+            <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
+        </svg>
+        CETAK POSTER (F4)
+    </button>
+</div>
+
+<div class="page-f4-landscape">
+    <!-- Garis bantu potong tengah lembaran -->
+    <div class="cut-line"></div>
+
+    <!-- POSTER BAGIAN KIRI -->
+    <div class="poster-half">
+        <div class="header">
+            <div class="instansi">UPTD Puskesmas Sampanahan</div>
+            <div class="judul-utama">Kritik & Saran<br>Pelayanan UGD</div>
+            <div class="sub-judul">Bantu Kami Meningkatkan Mutu Pelayanan Anda</div>
+            <div class="divider"></div>
+        </div>
+
+        <div class="qr-section">
+            <div class="qr-instruction">📸 SCAN QR CODE DI BAWAH INI:</div>
+            <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://kritikugdsampanahan.blogspot.com" alt="QR Link UGD">
+            <div class="link-text">kritikugdsampanahan.blogspot.com</div>
+        </div>
+
+        <div class="footer-info">
+            🔒 Identitas Anda dijamin <strong>ANONIM & RAHASIA</strong>.<br>
+            Setiap masukan diawasi langsung oleh Manajemen Puskesmas Sampanahan.
+        </div>
+    </div>
+
+    <!-- POSTER BAGIAN KANAN -->
+    <div class="poster-half">
+        <div class="header">
+            <div class="instansi">UPTD Puskesmas Sampanahan</div>
+            <div class="judul-utama">Kritik & Saran<br>Pelayanan UGD</div>
+            <div class="sub-judul">Bantu Kami Meningkatkan Mutu Pelayanan Anda</div>
+            <div class="divider"></div>
+        </div>
+
+        <div class="qr-section">
+            <div class="qr-instruction">📸 SCAN QR CODE DI BAWAH INI:</div>
+            <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://kritikugdsampanahan.blogspot.com" alt="QR Link UGD">
+            <div class="link-text">kritikugdsampanahan.blogspot.com</div>
+        </div>
+
+        <div class="footer-info">
+            🔒 Identitas Anda dijamin <strong>ANONIM & RAHASIA</strong>.<br>
+            Setiap masukan diawasi langsung oleh Manajemen Puskesmas Sampanahan.
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
